@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+	<div class="col-xs-8">
+		<%= render @bookings %>
+	</div>
+	<div class="col-xs-4">
+		<div class="form-inline float-right">
+		   <%= form_tag bookings_view_seat_path, :method => 'get' do %>
+		    <p>
+		      <%= text_field_tag :pnr, params[:pnr], :class => "form-control mr-sm-2" %>
+		      <%= submit_tag "Allocate Seat PNR", :name => nil, :class => 'btn btn-success' %>
+		    </p>
+		    <% end %>
+		</div>
+	</div>
+
+	
+</div>

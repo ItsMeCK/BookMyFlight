@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-xs-6">  
+    <%= image_tag("slider1.jpg", size: "800x380", class: "d-block w-100") %>
+  </div>
+  <div class="col-xs-6">
+    <div class="col-md-10 col-md-offset-1" id="search-form">
+      <span class="border border-primary">
+        <h1 class="text-center">Search for flights: </h1><br/>
+        <%= form_for @flight, html: {method: :get}, remote: true do |f| %>
+            <div class="row">
+              <div class="col-md-9 col-md-offset-2 text-center">
+                <%= f.label :from_airport %>
+                <%= f.select(:from_airport, @airports, {selected: @from}, {:class => 'form-control', id: 'from_airport'}) %>
+                <br/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9 col-md-offset-2 text-center">
+                <%= f.label :to_airport %>
+                <%= f.select(:to_airport, @airports, {selected: @to}, {:class => 'form-control', id: 'to_airport'}) %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 col-md-offset-2 text-center">
+                <%= f.label :date %>
+                <%= f.select(:date, @dates, {selected: @date}, {:class => 'form-control'}) %>
+              </div>
+
+              <div class="col-md-4 text-center">
+                <%= f.label :passengers %>
+                <%= f.select(:passengers, @passengers, {selected: @passengers_select}, {:class => 'form-control'}) %>
+              </div>
+            </div>
+            <br/>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <%= f.submit "Search", id: 'search-btn', class: 'form-control btn btn-primary btn-block search-btn' %>
+              </div>
+            </div>
+        <% end %>
+      </span>
+    </div>
+    <br/>
+  </div>
+</div>
+
+<div id="results" style="display: none;">
+
+</div>
+
+<script type="text/javascript">
+
+
+    $('#search-btn').click(function () {
+        $from = $('#from_airport option:selected').text();
+        $to = $('#to_airport option:selected').text();
+        if ($from == $to) {
+            alert("Same City! Please change it.");
+        }
+    });
+
+
+</script>
