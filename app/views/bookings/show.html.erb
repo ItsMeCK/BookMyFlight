@@ -24,7 +24,7 @@
         <td><%= passengers_count %></td>
         <td><%= @flight.from_airport.code %></td>
         <td><%= @flight.to_airport.code %></td>
-        <td><%= @flight.seat_configurations.first.price * passengers_count%> Rs;</td>
+        <td><%= @booking.booking_total_price %></td>
       </tr>
       </tbody>
     </table>
@@ -41,10 +41,10 @@
         <h5><strong>Email: </strong><%= p.email %></h5>
         <h5><strong>PNR: </strong><%= p.passenger_bookings.first.pnr_number %></h5>
         <h5><strong>Class: </strong><%= p.seat_class %></h5>
-        <h5><strong>Seat: </strong><%= p.passenger_bookings.first.seat_number || link_to("Allocate Seat", bookings_view_seat_path(pnr: p.passenger_bookings.first.pnr_number))%> </h5>
+        <h5><strong>Seat: </strong><%= p.passenger_bookings.first.seat_number || link_to("Select Seat", bookings_view_seat_path(pnr: p.passenger_bookings.first.pnr_number))%> </h5>
 
         <% if i == passengers_count-1 %>
-            <code class="pull-right">Total: <%= passengers_count * p.flights.first.seat_configurations.first.price %> Rs</code>
+            <code class="pull-right">Total: <%= @booking.booking_total_price %> Rs</code>
         <% end %>
       </div>
 

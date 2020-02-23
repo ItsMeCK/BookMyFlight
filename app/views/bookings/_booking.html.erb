@@ -21,7 +21,7 @@
         <td><%= booking.passengers.count %></td>
         <td><%= booking.flight.from_airport.code %></td>
         <td><%= booking.flight.to_airport.code %></td>
-        <td><%#= @flight.price %> Rs;</td>
+        <td>Rs <%= booking.booking_total_price %> </td>
         <td> <%= link_to("View Passenger Details", booking_path(booking)) %></td>
       </tr>
       </tbody>

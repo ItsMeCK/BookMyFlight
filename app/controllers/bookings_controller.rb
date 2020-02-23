@@ -68,10 +68,20 @@ class BookingsController < ApplicationController
   end
 
   def view_seat
-    flight_availability = Flight.get_flight_from_pnr(params[:pnr]).generate_seat_availabilty_ui
-    @flight_map = flight_availability[:flight_map]
-    @flightallocated = flight_availability[:allocated]
-    @pnr = params[:pnr]
+    valid = PassengerBooking.validate_pnr(params[:pnr], current_user.id)
+    if valid
+      flight_availability = Flight.get_flight_from_pnr(params[:pnr]).generate_seat_availabilty_ui
+      @flight_map = flight_availability[:flight_map]
+      @flightallocated = flight_availability[:allocated]
+      @pnr = params[:pnr]
+    end
+    respond_to do |format|
+      if valid
+        format.html { render :view_seat }
+      else        
+        format.html { redirect_to bookings_path, notice: 'PNR Doesnt exist'}
+      end
+    end
   end
 
   def allocate_seat

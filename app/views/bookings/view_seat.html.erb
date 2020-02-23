@@ -43,8 +43,12 @@
       },
       click: function () {
         if (this.status() == 'available') {
+          if ($('#selected-seats li').length == 1) {
+            alert("Only One seat per PNR");
+            return this.style();
+          }
           //let's create a new <li> which we'll add to the cart items
-          $('<li>'+this.data().category+' Seat # '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+          $('<li>'+this.data().category+' Seat # '+this.settings.label+':  <a href="#" class="cancel-cart-item">[cancel]</a></li>')
             .attr('id', 'cart-item-'+this.settings.id)
             .data('seatId', this.settings.id)
             .appendTo($cart);
@@ -59,7 +63,7 @@
             $counter.text(sc.find('selected').length+1);  
           };
           
-          $total.text(recalculateTotal(sc)+this.data().price);
+         
           
           return 'selected';
         } else if (this.status() == 'selected') {
@@ -70,7 +74,6 @@
           };
           $counter.text(sc.find('selected').length-1);
           //and total
-          $total.text(recalculateTotal(sc)-this.data().price);
         
           //remove the item from our cart
           $('#cart-item-'+this.settings.id).remove();
@@ -118,16 +121,6 @@
 
 });
 
-function recalculateTotal(sc) {
-  var total = 0;
-
-  //basically find every selected seat and sum its price
-  sc.find('selected').each(function () {
-    total += this.data().price;
-  });
-  
-  return total;
-}
 
 </script>
 
@@ -148,8 +141,6 @@ function recalculateTotal(sc) {
       
       <h3> Selected Seats (<span id="counter">0</span>):</h3>
       <ul id="selected-seats"></ul>
-      
-      Total: <b>$<span id="total">0</span></b>
       
       <button class="checkout-button">Checkout &raquo;</button>
       

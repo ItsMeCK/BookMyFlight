@@ -21,7 +21,7 @@
         <td><%= params[:passenger_count] %></td>
         <td><%= @flight.from_airport.code %></td>
         <td><%= @flight.to_airport.code %></td>
-        <td>Rs <%= @flight.seat_configurations.first.price.to_f * params[:passenger_count].to_i %></td>
+        <td><%= format_prices(flight_price(@flight)) %></td>
       </tr>
       </tbody>
     </table>

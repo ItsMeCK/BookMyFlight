@@ -4,6 +4,15 @@ class Flight < ApplicationRecord
 	has_many :seat_configurations
 	has_many :bookings
 
+	validates :departure_airport_id, exclusion: { in: lambda{ |flight| [flight.destination_airport_id] } }
+	validate :flight_time_today_or_future, on: :create
+	validates :flight_time, presence: true
+	
+
+
+
+	#enum category: [:first_class, :business_class, :economy_class]
+
 	@@blocked_seats = 0
 	FLIGHT_MAP = {"first_class" => 'f', "business_class" => 'b', "economy_class" => 'e'}
 
@@ -43,13 +52,16 @@ class Flight < ApplicationRecord
 
 
 	def generate_seat_availabilty_ui
-		all_flight_bookings = bookings.map(&:passenger_bookings).flatten.compact
-		allocated_booking_map = all_flight_bookings.select {|booking| booking.seat_number?}.map(&:seat_number)
-		flight_map = []
-		seat_configurations.each do |conf|
-			conf.no_of_rows.times {flight_map << (FLIGHT_MAP[conf.category.gsub(' ', '_').downcase] * conf.seat_in_row)}
+		Rails.cache.fetch("Flight_#{id}_map") do
+			puts 'evaluating...' ; 
+			all_flight_bookings = bookings.map(&:passenger_bookings).flatten.compact
+			allocated_booking_map = all_flight_bookings.select {|booking| booking.seat_number?}.map(&:seat_number)
+			flight_map = []
+			seat_configurations.each do |conf|
+				conf.no_of_rows.times {flight_map << (FLIGHT_MAP[conf.category.gsub(' ', '_').downcase] * conf.seat_in_row)}
+			end
+			{allocated: allocated_booking_map, flight_map: flight_map}
 		end
-		{allocated: allocated_booking_map, flight_map: flight_map}
 	end
 
 	def self.get_flight_from_pnr(pnr)
@@ -61,7 +73,13 @@ class Flight < ApplicationRecord
 	end
 
 	def self.format_date(date)
-	  date = date.to_date
+	  date = Date.strptime(date, '%m/%d/%y')
 	  date.beginning_of_day..date.end_of_day
+	end
+
+	private
+	def flight_time_today_or_future
+		return if flight_time && flight_time >= Date.today
+	  errors.add(:flight_time, "must be equeal or after the today") 
 	end
 end

@@ -28,7 +28,7 @@
                         <td><%= params[:flight][:passengers] %></td>
                         <td><%= f.from_airport.code %></td>
                         <td><%= f.to_airport.code %></td>
-                        <td><%= f.seat_configurations.first.price %> Rs</td>
+                        <td><%= format_prices(flight_price(f)) %></td>
                       </tr  >
                   <% end %>
                   </tbody>

@@ -16,5 +16,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require jQuery-Seat-Charts-master/jquery.seat-charts.js
+//= require bootstrap-datepicker
 //= require toastr
 //= require_tree .

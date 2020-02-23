@@ -31,3 +31,11 @@ development:
   username: postgres
   password: root
   host: localhost
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: book_my_flight_test
+  pool: 5
+  username: postgres
+  password: root
+  host: localhost

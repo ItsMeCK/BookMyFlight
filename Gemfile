@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'mini_racer'
-gem 'ancestry'
+gem 'bootstrap-datepicker-rails'
 
 
 # Use ActiveStorage variant
@@ -75,6 +75,8 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'rspec-rails'
+  gem 'factory_bot_rails'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
