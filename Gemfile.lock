@@ -129,7 +129,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.0)
     kaminari-core (1.2.0)
-    libv8 (7.3.492.27.1-x86_64-linux)
+    libv8 (7.3.492.27.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -161,7 +161,8 @@ GEM
     pry-nav (0.3.0)
       pry (>= 0.9.10, < 0.13.0)
     public_suffix (4.0.3)
-    puma (3.12.2)
+    puma (4.3.12)
+      nio4r (~> 2.0)
     rack (2.2.2)
     rack-pjax (1.1.0)
       nokogiri (~> 1.5)
@@ -308,7 +309,7 @@ DEPENDENCIES
   pg
   pry
   pry-nav
-  puma (~> 3.11)
+  puma (~> 4.3)
   rails (~> 5.2.1)
   rails_admin (~> 2.0)
   rspec-rails
